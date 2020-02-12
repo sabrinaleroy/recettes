@@ -58,11 +58,17 @@ class Recipe
      */
     private $comNotes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\RecipeList", mappedBy="recipes")
+     */
+    private $recipeLists;
+
     public function __construct()
     {
         $this->recipeAppliances = new ArrayCollection();
         $this->items = new ArrayCollection();
         $this->comNotes = new ArrayCollection();
+        $this->recipeLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,6 +224,34 @@ class Recipe
             if ($comNote->getRecipe() === $this) {
                 $comNote->setRecipe(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RecipeList[]
+     */
+    public function getRecipeLists(): Collection
+    {
+        return $this->recipeLists;
+    }
+
+    public function addRecipeList(RecipeList $recipeList): self
+    {
+        if (!$this->recipeLists->contains($recipeList)) {
+            $this->recipeLists[] = $recipeList;
+            $recipeList->addRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeList(RecipeList $recipeList): self
+    {
+        if ($this->recipeLists->contains($recipeList)) {
+            $this->recipeLists->removeElement($recipeList);
+            $recipeList->removeRecipe($this);
         }
 
         return $this;

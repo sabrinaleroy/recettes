@@ -80,6 +80,11 @@ class User implements UserInterface
      */
     private $sharedShoppingLists;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeList", mappedBy="author", orphanRemoval=true)
+     */
+    private $recipeLists;
+
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
@@ -88,6 +93,7 @@ class User implements UserInterface
         $this->comNotes = new ArrayCollection();
         $this->shoppingLists = new ArrayCollection();
         $this->sharedShoppingLists = new ArrayCollection();
+        $this->recipeLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -377,6 +383,37 @@ class User implements UserInterface
         if ($this->sharedShoppingLists->contains($sharedShoppingList)) {
             $this->sharedShoppingLists->removeElement($sharedShoppingList);
             $sharedShoppingList->removeSharedWith($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RecipeList[]
+     */
+    public function getRecipeLists(): Collection
+    {
+        return $this->recipeLists;
+    }
+
+    public function addRecipeList(RecipeList $recipeList): self
+    {
+        if (!$this->recipeLists->contains($recipeList)) {
+            $this->recipeLists[] = $recipeList;
+            $recipeList->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeList(RecipeList $recipeList): self
+    {
+        if ($this->recipeLists->contains($recipeList)) {
+            $this->recipeLists->removeElement($recipeList);
+            // set the owning side to null (unless already changed)
+            if ($recipeList->getAuthor() === $this) {
+                $recipeList->setAuthor(null);
+            }
         }
 
         return $this;

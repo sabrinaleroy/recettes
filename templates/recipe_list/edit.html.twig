@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit RecipeList{% endblock %}
+
+{% block body %}
+    <h1>Edit RecipeList</h1>
+
+    {{ include('recipe_list/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('recipe_list_index') }}">back to list</a>
+
+    {{ include('recipe_list/_delete_form.html.twig') }}
+{% endblock %}

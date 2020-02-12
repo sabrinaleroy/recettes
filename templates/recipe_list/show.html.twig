@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RecipeList{% endblock %}
+
+{% block body %}
+    <h1>RecipeList</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ recipe_list.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ recipe_list.date ? recipe_list.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('recipe_list_index') }}">back to list</a>
+
+    <a href="{{ path('recipe_list_edit', {'id': recipe_list.id}) }}">edit</a>
+
+    {{ include('recipe_list/_delete_form.html.twig') }}
+{% endblock %}
