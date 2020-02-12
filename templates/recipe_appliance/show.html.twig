@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RecipeAppliance{% endblock %}
+
+{% block body %}
+    <h1>RecipeAppliance</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ recipe_appliance.id }}</td>
+            </tr>
+            <tr>
+                <th>Mandatory</th>
+                <td>{{ recipe_appliance.mandatory ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('recipe_appliance_index') }}">back to list</a>
+
+    <a href="{{ path('recipe_appliance_edit', {'id': recipe_appliance.id}) }}">edit</a>
+
+    {{ include('recipe_appliance/_delete_form.html.twig') }}
+{% endblock %}

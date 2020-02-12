@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New VoteMySay{% endblock %}
+
+{% block body %}
+    <h1>Create new VoteMySay</h1>
+
+    {{ include('vote_my_say/_form.html.twig') }}
+
+    <a href="{{ path('vote_my_say_index') }}">back to list</a>
+{% endblock %}

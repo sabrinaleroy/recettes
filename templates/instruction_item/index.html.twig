@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}InstructionItem index{% endblock %}
+
+{% block body %}
+    <h1>InstructionItem index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quotient</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for instruction_item in instruction_items %}
+            <tr>
+                <td>{{ instruction_item.id }}</td>
+                <td>{{ instruction_item.quotient }}</td>
+                <td>
+                    <a href="{{ path('instruction_item_show', {'id': instruction_item.id}) }}">show</a>
+                    <a href="{{ path('instruction_item_edit', {'id': instruction_item.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('instruction_item_new') }}">Create new</a>
+{% endblock %}

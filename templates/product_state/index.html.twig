@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProductState index{% endblock %}
+
+{% block body %}
+    <h1>ProductState index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>LabelF</th>
+                <th>LabelM</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product_state in product_states %}
+            <tr>
+                <td>{{ product_state.id }}</td>
+                <td>{{ product_state.labelF }}</td>
+                <td>{{ product_state.labelM }}</td>
+                <td>
+                    <a href="{{ path('product_state_show', {'id': product_state.id}) }}">show</a>
+                    <a href="{{ path('product_state_edit', {'id': product_state.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('product_state_new') }}">Create new</a>
+{% endblock %}

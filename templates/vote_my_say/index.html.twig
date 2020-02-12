@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}VoteMySay index{% endblock %}
+
+{% block body %}
+    <h1>VoteMySay index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Value</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vote_my_say in vote_my_says %}
+            <tr>
+                <td>{{ vote_my_say.id }}</td>
+                <td>{{ vote_my_say.value ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('vote_my_say_show', {'id': vote_my_say.id}) }}">show</a>
+                    <a href="{{ path('vote_my_say_edit', {'id': vote_my_say.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('vote_my_say_new') }}">Create new</a>
+{% endblock %}

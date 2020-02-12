@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RecipeAppliance index{% endblock %}
+
+{% block body %}
+    <h1>RecipeAppliance index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Mandatory</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recipe_appliance in recipe_appliances %}
+            <tr>
+                <td>{{ recipe_appliance.id }}</td>
+                <td>{{ recipe_appliance.mandatory ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('recipe_appliance_show', {'id': recipe_appliance.id}) }}">show</a>
+                    <a href="{{ path('recipe_appliance_edit', {'id': recipe_appliance.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('recipe_appliance_new') }}">Create new</a>
+{% endblock %}

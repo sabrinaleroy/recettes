@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RecipeAppliance{% endblock %}
+
+{% block body %}
+    <h1>Create new RecipeAppliance</h1>
+
+    {{ include('recipe_appliance/_form.html.twig') }}
+
+    <a href="{{ path('recipe_appliance_index') }}">back to list</a>
+{% endblock %}

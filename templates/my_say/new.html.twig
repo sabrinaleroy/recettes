@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New MySay{% endblock %}
+
+{% block body %}
+    <h1>Create new MySay</h1>
+
+    {{ include('my_say/_form.html.twig') }}
+
+    <a href="{{ path('my_say_index') }}">back to list</a>
+{% endblock %}
