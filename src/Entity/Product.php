@@ -33,9 +33,15 @@ class Product
      */
     private $items;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Image", inversedBy="products")
+     */
+    private $image;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->image = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,6 +99,32 @@ class Product
             if ($item->getProduct() === $this) {
                 $item->setProduct(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImage(): Collection
+    {
+        return $this->image;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->image->contains($image)) {
+            $this->image[] = $image;
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->image->contains($image)) {
+            $this->image->removeElement($image);
         }
 
         return $this;

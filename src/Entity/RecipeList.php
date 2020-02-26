@@ -34,9 +34,15 @@ class RecipeList
      */
     private $date;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Taxonomy")
+     */
+    private $listType;
+
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
+        $this->listType = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,6 +96,32 @@ class RecipeList
     public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Taxonomy[]
+     */
+    public function getListType(): Collection
+    {
+        return $this->listType;
+    }
+
+    public function addListType(Taxonomy $listType): self
+    {
+        if (!$this->listType->contains($listType)) {
+            $this->listType[] = $listType;
+        }
+
+        return $this;
+    }
+
+    public function removeListType(Taxonomy $listType): self
+    {
+        if ($this->listType->contains($listType)) {
+            $this->listType->removeElement($listType);
+        }
 
         return $this;
     }

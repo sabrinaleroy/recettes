@@ -63,12 +63,24 @@ class Recipe
      */
     private $recipeLists;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Taxonomy", inversedBy="recipes")
+     */
+    private $taxonomy;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Image", inversedBy="recipes")
+     */
+    private $images;
+
     public function __construct()
     {
         $this->recipeAppliances = new ArrayCollection();
         $this->items = new ArrayCollection();
         $this->comNotes = new ArrayCollection();
         $this->recipeLists = new ArrayCollection();
+        $this->taxonomy = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -252,6 +264,58 @@ class Recipe
         if ($this->recipeLists->contains($recipeList)) {
             $this->recipeLists->removeElement($recipeList);
             $recipeList->removeRecipe($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Taxonomy[]
+     */
+    public function getTaxonomy(): Collection
+    {
+        return $this->taxonomy;
+    }
+
+    public function addTaxonomy(Taxonomy $taxonomy): self
+    {
+        if (!$this->taxonomy->contains($taxonomy)) {
+            $this->taxonomy[] = $taxonomy;
+        }
+
+        return $this;
+    }
+
+    public function removeTaxonomy(Taxonomy $taxonomy): self
+    {
+        if ($this->taxonomy->contains($taxonomy)) {
+            $this->taxonomy->removeElement($taxonomy);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
         }
 
         return $this;

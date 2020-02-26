@@ -85,6 +85,21 @@ class User implements UserInterface
      */
     private $recipeLists;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Moderation", mappedBy="author")
+     */
+    private $moderations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="target", orphanRemoval=true)
+     */
+    private $notifications;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="author")
+     */
+    private $images;
+
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
@@ -94,6 +109,9 @@ class User implements UserInterface
         $this->shoppingLists = new ArrayCollection();
         $this->sharedShoppingLists = new ArrayCollection();
         $this->recipeLists = new ArrayCollection();
+        $this->moderations = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -413,6 +431,99 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($recipeList->getAuthor() === $this) {
                 $recipeList->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Moderation[]
+     */
+    public function getModerations(): Collection
+    {
+        return $this->moderations;
+    }
+
+    public function addModeration(Moderation $moderation): self
+    {
+        if (!$this->moderations->contains($moderation)) {
+            $this->moderations[] = $moderation;
+            $moderation->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModeration(Moderation $moderation): self
+    {
+        if ($this->moderations->contains($moderation)) {
+            $this->moderations->removeElement($moderation);
+            // set the owning side to null (unless already changed)
+            if ($moderation->getAuthor() === $this) {
+                $moderation->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setTarget($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->contains($notification)) {
+            $this->notifications->removeElement($notification);
+            // set the owning side to null (unless already changed)
+            if ($notification->getTarget() === $this) {
+                $notification->setTarget(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getAuthor() === $this) {
+                $image->setAuthor(null);
             }
         }
 

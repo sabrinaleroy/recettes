@@ -44,9 +44,15 @@ class MySay
      */
     private $votes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Taxonomy", inversedBy="mySays")
+     */
+    private $taxonomy;
+
     public function __construct()
     {
         $this->votes = new ArrayCollection();
+        $this->taxonomy = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,6 +134,32 @@ class MySay
             if ($vote->getMySay() === $this) {
                 $vote->setMySay(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Taxonomy[]
+     */
+    public function getTaxonomy(): Collection
+    {
+        return $this->taxonomy;
+    }
+
+    public function addTaxonomy(Taxonomy $taxonomy): self
+    {
+        if (!$this->taxonomy->contains($taxonomy)) {
+            $this->taxonomy[] = $taxonomy;
+        }
+
+        return $this;
+    }
+
+    public function removeTaxonomy(Taxonomy $taxonomy): self
+    {
+        if ($this->taxonomy->contains($taxonomy)) {
+            $this->taxonomy->removeElement($taxonomy);
         }
 
         return $this;

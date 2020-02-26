@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Taxonomy index{% endblock %}
+
+{% block body %}
+    <h1>Taxonomy index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Value</th>
+                <th>Label</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for taxonomy in taxonomies %}
+            <tr>
+                <td>{{ taxonomy.id }}</td>
+                <td>{{ taxonomy.value }}</td>
+                <td>{{ taxonomy.label }}</td>
+                <td>
+                    <a href="{{ path('taxonomy_show', {'id': taxonomy.id}) }}">show</a>
+                    <a href="{{ path('taxonomy_edit', {'id': taxonomy.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('taxonomy_new') }}">Create new</a>
+{% endblock %}

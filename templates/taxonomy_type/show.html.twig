@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TaxonomyType{% endblock %}
+
+{% block body %}
+    <h1>TaxonomyType</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ taxonomy_type.id }}</td>
+            </tr>
+            <tr>
+                <th>Value</th>
+                <td>{{ taxonomy_type.value }}</td>
+            </tr>
+            <tr>
+                <th>Label</th>
+                <td>{{ taxonomy_type.label }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('taxonomy_type_index') }}">back to list</a>
+
+    <a href="{{ path('taxonomy_type_edit', {'id': taxonomy_type.id}) }}">edit</a>
+
+    {{ include('taxonomy_type/_delete_form.html.twig') }}
+{% endblock %}

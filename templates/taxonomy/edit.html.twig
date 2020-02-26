@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Taxonomy{% endblock %}
+
+{% block body %}
+    <h1>Edit Taxonomy</h1>
+
+    {{ include('taxonomy/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('taxonomy_index') }}">back to list</a>
+
+    {{ include('taxonomy/_delete_form.html.twig') }}
+{% endblock %}
